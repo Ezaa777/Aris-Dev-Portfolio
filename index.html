@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<meta property="og:title" content="Aris Dev | Portfolio" />
+<meta property="og:description" content="✨  About me!" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mio-media.my.id/" />
+<meta property="og:image" content="https://c.termai.cc/i186/Ljbfb.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="About me" />
+<meta property="og:site_name" content="Aris Dev | Portfolio" />
+<meta property="og:locale" content="id_ID" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="About me" />
+<meta name="twitter:description" content="About me!" />
+<meta name="twitter:image" content="https://c.termai.cc/i186/Ljbfb.jpg" />
+<link rel="icon" type="image/x-icon" href="https://c.termai.cc/i186/Ljbfb.jpg">
+<link rel="shortcut icon" type="image/x-icon" href="https://c.termai.cc/i186/Ljbfb.jpg">
+<link rel="apple-touch-icon" href="https://c.termai.cc/i186/Ljbfb.jpg">
+<title>Aris Dev | Portfolio</title>
+<style>
+  :root {
+    --pixel-green: #00ff41;
+    --pixel-cyan: #00e5ff;
+    --pixel-pink: #ff006e;
+    --pixel-yellow: #ffe600;
+    --pixel-purple: #9b00ff;
+    --pixel-orange: #ff6b00;
+    --bg-dark: #020c04;
+    --bg-card: rgba(0, 255, 65, 0.05);
+    --border-glow: rgba(0, 255, 65, 0.4);
+    --text-main: #e0ffe8;
+    --text-dim: #4dff7c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'VT323', monospace;
+    font-size: 18px; /* base sedikit lebih kecil untuk mobile */
+    overflow-x: hidden;
+  }
+
+  /* ── CUSTOM CURSOR: HIDE DI MOBILE ── */
+  #cursor {
+    display: none;
+  }
+
+  /* ── PIXEL CANVAS BG ── */
+  #pixelCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── SCANLINE OVERLAY ── */
+  .scanlines {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0,0,0,0.12) 2px,
+      rgba(0,0,0,0.12) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── MAIN WRAPPER ── */
+  main { position: relative; z-index: 2; }
+
+  /* ── NAVBAR (touch optimized) ── */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    background: rgba(2,12,4,0.96);
+    border-bottom: 2px solid var(--pixel-green);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--pixel-green);
+    text-shadow: 0 0 6px var(--pixel-green);
+    letter-spacing: 1px;
+  }
+
+  .nav-links { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+  .nav-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: var(--pixel-green);
+    background: transparent;
+    border: 1.5px solid var(--pixel-green);
+    padding: 6px 10px;
+    text-decoration: none;
+    transition: all 0.1s;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .nav-btn:active {
+    background: var(--pixel-green);
+    color: #000;
+    transform: scale(0.96);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 20px 50px;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: var(--pixel-cyan);
+    border: 1.5px solid var(--pixel-cyan);
+    padding: 5px 12px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+
+  .hero-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(24px, 8vw, 52px);
+    color: var(--pixel-green);
+    text-shadow: 3px 3px 0 #003a0a, 0 0 15px var(--pixel-green);
+    line-height: 1.2;
+    margin-bottom: 8px;
+    word-break: break-word;
+  }
+
+  .hero-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(8px, 3vw, 12px);
+    color: var(--pixel-yellow);
+    text-shadow: 1px 1px 0 #3a3000;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .role-chip {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    padding: 6px 10px;
+    border: 1.5px solid;
+    letter-spacing: 1px;
+  }
+
+  .hero-flag {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+
+  .hero-location {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  .pixel-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 10px 18px;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.1s;
+    letter-spacing: 1px;
+  }
+
+  .pixel-btn-primary {
+    background: var(--pixel-green);
+    color: #000;
+    box-shadow: 3px 3px 0 #003a0a;
+  }
+
+  .pixel-btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #003a0a;
+  }
+
+  .pixel-btn-secondary {
+    background: transparent;
+    color: var(--pixel-cyan);
+    border: 1.5px solid var(--pixel-cyan);
+    box-shadow: 2px 2px 0 rgba(0,229,255,0.3);
+  }
+
+  .pixel-btn-secondary:active {
+    background: var(--pixel-cyan);
+    color: #000;
+    transform: translate(2px, 2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    opacity: 0.5;
+    white-space: nowrap;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 50px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(14px, 4vw, 22px);
+    color: var(--pixel-green);
+    text-shadow: 2px 2px 0 #003a0a;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .section-title::before {
+    content: '▶';
+    color: var(--pixel-pink);
+    font-size: 0.9em;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pixel-green), transparent);
+    min-width: 40px;
+  }
+
+  /* ── ABOUT (mobile first) ── */
+  .about-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .pixel-avatar {
+    width: 140px;
+    height: 140px;
+    border: 3px solid var(--pixel-green);
+    box-shadow: 5px 5px 0 #003a0a;
+    margin: 0 auto;
+  }
+
+  #avatarCanvas {
+    width: 100% !important;
+    height: auto !important;
+    image-rendering: crisp-edges;
+  }
+
+  .about-text p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.5s ease;
+  }
+
+  .about-text p.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    border: 1.5px solid var(--pixel-cyan);
+    padding: 12px 8px;
+    text-align: center;
+    flex: 1;
+    min-width: 90px;
+    background: rgba(0,229,255,0.05);
+  }
+
+  .stat-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    color: var(--pixel-green);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .skill-card {
+    border: 2px solid var(--pixel-green);
+    padding: 14px;
+    background: var(--bg-card);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+
+  .skill-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .skill-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .skill-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .skill-bar {
+    height: 8px;
+    background: rgba(0,255,65,0.15);
+    border: 1px solid rgba(0,255,65,0.4);
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pixel-green), var(--pixel-cyan));
+    width: 0%;
+    transition: width 1s ease;
+  }
+
+  .skill-card div[style*="font-size:15px"] {
+    font-size: 12px !important;
+    margin-top: 6px;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .gallery-card {
+    border: 2px solid var(--pixel-green);
+    overflow: hidden;
+    background: #020c04;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: all 0.3s ease;
+  }
+
+  .gallery-card.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .gallery-thumb {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+  }
+
+  .gallery-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-info {
+    padding: 14px;
+  }
+
+  .gallery-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: var(--pixel-green);
+    margin-bottom: 8px;
+  }
+
+  .gallery-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .gallery-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    padding: 3px 6px;
+    border: 1px solid;
+  }
+
+  .gallery-link {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    background: var(--pixel-green);
+    color: #000;
+    padding: 6px 12px;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.1s;
+  }
+
+  .gallery-link:active {
+    background: var(--pixel-cyan);
+    transform: scale(0.96);
+  }
+
+  /* ── CONTACT (touch friendly) ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+  }
+
+  .contact-card {
+    border: 2px solid;
+    padding: 18px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: all 0.1s;
+  }
+
+  .contact-card:active {
+    transform: scale(0.96);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .contact-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+  .contact-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 2px solid var(--pixel-green);
+    padding: 24px 20px;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-blink {
+    color: var(--pixel-green);
+    animation: blinkSimple 1s step-start infinite;
+  }
+
+  @keyframes blinkSimple {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* ── TYPEWRITER ── */
+  .typewriter-wrap {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(8px, 3vw, 11px);
+    color: var(--pixel-cyan);
+    min-height: 34px;
+    letter-spacing: 1px;
+    margin: 8px 0;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 8px;
+    height: 2px;
+    background: var(--pixel-cyan);
+    vertical-align: middle;
+    animation: blinkSimple 0.6s step-start infinite;
+    margin-left: 3px;
+  }
+
+  /* ── RESPONSIVE UTILITIES ── */
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+      gap: 30px;
+    }
+    .pixel-avatar {
+      width: 160px;
+      height: 160px;
+    }
+    body {
+      font-size: 20px;
+    }
+    .nav-btn {
+      font-size: 8px;
+      padding: 7px 12px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    #cursor {
+      display: block; /* hanya di layar besar */
+    }
+  }
+
+  /* perbaikan touch & spacing */
+  button, a, .skill-card, .gallery-card {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  /* mengurangi efek berat di mobile */
+  .skill-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* scroll behavior halus */
+  html {
+    scroll-padding-top: 70px;
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<canvas id="pixelCanvas"></canvas>
+<div class="scanlines"></div>
+
+<nav>
+  <div class="nav-logo">ARIS_DEV.exe</div>
+  <div class="nav-links">
+    <a class="nav-btn" href="#about">ABOUT</a>
+    <a class="nav-btn" href="#skills">SKILLS</a>
+    <a class="nav-btn" href="#gallery">WORK</a>
+    <a class="nav-btn" href="#contact">CONTACT</a>
+  </div>
+</nav>
+
+<main>
+<div id="hero">
+  <div class="hero-tag">[ PORTFOLIO ACTIVE ]</div>
+  <div class="hero-flag">🇲🇾</div>
+  <h1 class="hero-name">ARIS DEV</h1>
+  <div class="hero-title">FULL-STACK DEVELOPER</div>
+  <div class="typewriter-wrap" id="typewriter"><span class="cursor-blink"></span></div>
+  <div style="height:12px"></div>
+  <div class="hero-roles">
+    <span class="role-chip">🌐 WEB DEV</span>
+    <span class="role-chip">📱 APK DEV</span>
+    <span class="role-chip">🤖 BOT DEV</span>
+    <span class="role-chip">✈ TELEGRAM BOT</span>
+  </div>
+  <div class="hero-location">📍 MALAYSIA</div>
+  <div class="cta-row">
+    <a href="#gallery" class="pixel-btn pixel-btn-primary">▶ VIEW WORK</a>
+    <a href="#contact" class="pixel-btn pixel-btn-secondary">▷ CONTACT ME</a>
+  </div>
+  <div class="scroll-hint">▼ SCROLL ▼</div>
+</div>
+
+<section id="about">
+  <h2 class="section-title">ABOUT_ME</h2>
+  <div class="about-grid">
+    <div>
+      <div class="pixel-avatar">
+        <canvas id="avatarCanvas" width="180" height="180"></canvas>
+      </div>
+    </div>
+    <div class="about-text">
+      <p>Hai! Nama saya <strong style="color:var(--pixel-green)">Aris Dev</strong> — seorang developer dari Malaysia yang suka membina perkara berguna dan menarik.</p>
+      <p>Kepakaran saya merangkumi pembangunan web moden, aplikasi Android/APK, bot Telegram, dan sistem automasi. Setiap projek dibina dengan perhatian terhadap detail.</p>
+      <p>Saya percaya teknologi adalah alat untuk menyelesaikan masalah nyata — dan saya suka mencipta alat yang benar-benar berfungsi.</p>
+      <div class="stat-row">
+        <div class="stat-box">
+          <span class="stat-num" data-count="50">0</span>
+          <span class="stat-label">PROJECTS</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="3">0</span>
+          <span class="stat-label">YEARS EXP</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="30">0</span>
+          <span class="stat-label">CLIENTS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">SKILLS_TREE</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <span class="skill-icon" style="color:var(--pixel-cyan)">🌐</span>
+      <div class="skill-name">WEB DEV</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px">HTML · CSS · JS · PHP</div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon" style="color:var(--pixel-pink)">📱</span>
+      <div class="skill-name">APK DEV</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px">Android · Flutter · Java</div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon" style="color:var(--pixel-yellow)">🤖</span>
+      <div class="skill-name">BOT DEV</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px">Python · Node.js · APIs</div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon" style="color:var(--pixel-purple)">✈</span>
+      <div class="skill-name">TELEGRAM BOT</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="98"></div></div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px">python-telegram-bot · grammY</div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon" style="color:var(--pixel-orange)">🛠</span>
+      <div class="skill-name">BACKEND</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px">Node.js · Python · MySQL</div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon" style="color:var(--pixel-green)">⚙</span>
+      <div class="skill-name">AUTOMATION</div>
+      <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px">Selenium · Scrapy · Cron</div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <h2 class="section-title">PROJECT_GALLERY</h2>
+  <div class="gallery-grid">
+    <div class="gallery-card">
+      <div class="gallery-thumb">
+        <img class="gallery-thumb-img" src="https://c.termai.cc/i140/LrSG.jpg" alt="Web Project" loading="lazy">
+      </div>
+      <div class="gallery-info">
+        <div class="gallery-title">// mio media</div>
+        <div class="gallery-desc">✨ Social media platform untuk berbagi foto, video, musik, dan temukan teman baru!.</div>
+        <div class="gallery-tags"><span class="tag tag-web">WEB</span><span class="tag tag-api">API</span></div>
+        <a href="https://mio-media-sosial-privasi-production.up.railway.app/" target="_blank" class="gallery-link">▶ VIEW PROJECT</a>
+      </div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-thumb">
+        <img class="gallery-thumb-img" src="https://c.termai.cc/i153/neTkw.jpg" alt="App Project" loading="lazy">
+      </div>
+      <div class="gallery-info">
+        <div class="gallery-title">// Anime wibuku v2</div>
+        <div class="gallery-desc">Anime, random, donghub, hiburan.</div>
+        <div class="gallery-tags"><span class="tag tag-app">wa</span><span class="tag tag-api">gc</span></div>
+        <a href="https://chat.whatsapp.com/DgKUY5TYEEVLdWIIyfatoC?s=cl&p=a&mlu=4&amv=0" target="_blank" class="gallery-link">▶ VIEW PROJECT</a>
+      </div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-thumb">
+        <img class="gallery-thumb-img" src="https://c.termai.cc/i142/bddx3M.jpg" alt="Bot Project" loading="lazy">
+      </div>
+      <div class="gallery-info">
+        <div class="gallery-title">// 💦Anime Wibuku - Mio Official🧢</div>
+        <div class="gallery-desc">Random.</div>
+        <div class="gallery-tags"><span class="tag tag-bot">ch</span><span class="tag tag-tele">Saluran</span></div>
+        <a href="https://whatsapp.com/channel/0029Vb6oyNj7z4klk4dDGC30" target="_blank" class="gallery-link">▶ VIEW PROJECT</a>
+      </div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-thumb">
+        <img class="gallery-thumb-img" src="https://c.termai.cc/i186/Ljbfb.jpg" alt="Dashboard" loading="lazy">
+      </div>
+      <div class="gallery-info">
+        <div class="gallery-title">// blmmmm buatttttt projek baru</div>
+        <div class="gallery-desc">?.</div>
+        <div class="gallery-tags"><span class="tag tag-web">WEB</span><span class="tag tag-api">API</span></div>
+        <a href="https://whatsapp.com/channel/0029Vb6oyNj7z4klk4dDGC30" target="_blank" class="gallery-link">▶ VIEW PROJECT</a>
+      </div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-thumb">
+        <img class="gallery-thumb-img" src="https://c.termai.cc/i186/Ljbfb.jpg" alt="Automation" loading="lazy">
+      </div>
+      <div class="gallery-info">
+        <div class="gallery-title">// blmmmm buatttttt projek baru </div>
+        <div class="gallery-desc">?.</div>
+        <div class="gallery-tags"><span class="tag tag-bot">BOT</span><span class="tag tag-tele">TELEGRAM</span><span class="tag tag-api">API</span></div>
+        <a href="https://whatsapp.com/channel/0029Vb6oyNj7z4klk4dDGC30" target="_blank" class="gallery-link">▶ VIEW PROJECT</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title">CONTACT_ME</h2>
+  <p style="font-size:18px;color:var(--text-dim);margin-bottom:28px;line-height:1.5">Ada projek atau idea menarik? Jangan segan untuk hubungi saya. Sedia berkolaborasi!</p>
+  <div class="contact-grid">
+    <a class="contact-card" href="t.me/Mieee817" target="_blank" data-label="TELEGRAM">
+      <span class="contact-icon">✈</span>
+      <div class="contact-name">TELEGRAM</div>
+    </a>
+    <a class="contact-card" href="https://github.com/arisdev" target="_blank" data-label="GITHUB">
+      <span class="contact-icon">💻</span>
+      <div class="contact-name">GITHUB</div>
+    </a>
+    <a class="contact-card" href="mailto:aris@dev.my" data-label="EMAIL">
+      <span class="contact-icon">📧</span>
+      <div class="contact-name">EMAIL</div>
+    </a>
+    <a class="contact-card" href="https://wa.me/601129601577" target="_blank" data-label="WHATSAPP">
+      <span class="contact-icon">💬</span>
+      <div class="contact-name">WHATSAPP</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div>ARIS DEV © 2026 · MALAYSIA</div>
+  <div style="margin-top:8px">BUILT WITH <span class="footer-blink">♥</span> & COFFEE ☕</div>
+</footer>
+</main>
+
+<script>
+// Nonaktifkan custom cursor di mobile (sudah lewat CSS, tapi tambah logika ringan)
+if (window.innerWidth < 900) {
+  const cursorEl = document.getElementById('cursor');
+  if(cursorEl) cursorEl.style.display = 'none';
+}
+
+// ── PIXEL CANVAS (optimized untuk mobile: kurangi jumlah stream & grid intensity) ──
+const canvasBg = document.getElementById('pixelCanvas');
+const ctxBg = canvasBg.getContext('2d');
+let width = window.innerWidth;
+let height = window.innerHeight;
+canvasBg.width = width;
+canvasBg.height = height;
+
+window.addEventListener('resize', () => {
+  canvasBg.width = window.innerWidth;
+  canvasBg.height = window.innerHeight;
+  initPixelBackground();
+});
+
+const PIXEL_SIZE = Math.max(12, Math.floor(window.innerWidth / 60)); // responsive pixel size
+let cols = Math.ceil(width / PIXEL_SIZE);
+let rows = Math.ceil(height / PIXEL_SIZE);
+let grid = [];
+let streams = [];
+
+function initPixelBackground() {
+  cols = Math.ceil(canvasBg.width / PIXEL_SIZE);
+  rows = Math.ceil(canvasBg.height / PIXEL_SIZE);
+  grid = [];
+  for (let i = 0; i < cols * rows; i++) {
+    grid.push({
+      alpha: Math.random() * 0.05,
+      targetAlpha: Math.random() * 0.06,
+      color: ['#00ff41','#00e5ff','#ff006e','#ffe600','#9b00ff','#ff6b00'][Math.floor(Math.random() * 6)],
+      speed: 0.002 + Math.random() * 0.002,
+      timer: Math.random() * 200
+    });
+  }
+  const streamCount = window.innerWidth < 700 ? 12 : 24;
+  streams = [];
+  for (let i = 0; i < streamCount; i++) {
+    streams.push({
+      x: Math.floor(Math.random() * cols),
+      y: Math.random() * rows,
+      speed: 0.2 + Math.random() * 0.5,
+      length: 4 + Math.floor(Math.random() * 7),
+      alpha: 0.05 + Math.random() * 0.2,
+      color: ['#00ff41','#00e5ff','#ff006e','#ffe600'][Math.floor(Math.random() * 4)]
+    });
+  }
+}
+
+function drawPixelBackground() {
+  if (!ctxBg) return;
+  ctxBg.clearRect(0, 0, canvasBg.width, canvasBg.height);
+  // ambient grid
+  for (let i = 0; i < grid.length; i++) {
+    const p = grid[i];
+    p.timer++;
+    if (p.timer > 180 + Math.random() * 300) {
+      p.targetAlpha = Math.random() * 0.07;
+      p.timer = 0;
+      if (Math.random() < 0.1) p.color = ['#00ff41','#00e5ff','#ff006e','#ffe600','#9b00ff','#ff6b00'][Math.floor(Math.random() * 6)];
+    }
+    p.alpha += (p.targetAlpha - p.alpha) * p.speed;
+    if (p.alpha < 0.002) continue;
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    ctxBg.fillStyle = p.color;
+    ctxBg.globalAlpha = p.alpha;
+    ctxBg.fillRect(col * PIXEL_SIZE, row * PIXEL_SIZE, PIXEL_SIZE - 1, PIXEL_SIZE - 1);
+  }
+  // streams
+  for (const s of streams) {
+    s.y += s.speed;
+    if (s.y > rows) {
+      s.y = -s.length;
+      s.x = Math.floor(Math.random() * cols);
+      s.color = ['#00ff41','#00e5ff','#ff006e','#ffe600'][Math.floor(Math.random() * 4)];
+    }
+    for (let k = 0; k < s.length; k++) {
+      const py = Math.floor(s.y) - k;
+      if (py < 0 || py >= rows) continue;
+      const fade = (s.length - k) / s.length;
+      ctxBg.fillStyle = k === 0 ? '#ffffff' : s.color;
+      ctxBg.globalAlpha = s.alpha * fade * (k === 0 ? 1.4 : 0.9);
+      ctxBg.fillRect(s.x * PIXEL_SIZE, py * PIXEL_SIZE, PIXEL_SIZE - 1, PIXEL_SIZE - 1);
+    }
+  }
+  ctxBg.globalAlpha = 1;
+  requestAnimationFrame(drawPixelBackground);
+}
+initPixelBackground();
+drawPixelBackground();
+
+// ── AVATAR PIXEL ──
+const avatarCanvas = document.getElementById('avatarCanvas');
+const ac = avatarCanvas.getContext('2d');
+ac.imageSmoothingEnabled = false;
+const pixelArt = [
+  [0,0,1,1,1,1,0,0,0,0,0,0],
+  [0,1,2,2,2,2,1,0,0,0,0,0],
+  [0,1,2,3,3,2,1,0,0,0,0,0],
+  [0,1,2,3,3,2,1,0,0,0,0,0],
+  [0,0,1,2,2,1,0,0,0,0,0,0],
+  [0,1,1,1,1,1,1,0,0,0,0,0],
+  [1,1,4,4,4,4,1,1,0,0,0,0],
+  [1,4,4,4,4,4,4,1,0,0,0,0],
+  [0,1,4,4,4,4,1,0,0,0,0,0],
+  [0,0,1,1,1,1,0,0,0,0,0,0],
+  [0,0,1,0,0,1,0,0,0,0,0,0],
+  [0,0,1,0,0,1,0,0,0,0,0,0]
+];
+const palAv = {0:'transparent',1:'#00ff41',2:'#c8ffd4',3:'#5fffaa',4:'#00cc33'};
+const pSize = 12;
+function drawAvatar(offset) {
+  ac.clearRect(0,0,180,180);
+  for (let r=0;r<pixelArt.length;r++) {
+    for (let c=0;c<pixelArt[r].length;c++) {
+      const col = palAv[pixelArt[r][c]];
+      if (col === 'transparent') continue;
+      ac.fillStyle = col;
+      ac.fillRect(c*pSize + 18, r*pSize + 18 + Math.sin(offset + c*0.5)*1.5, pSize-1, pSize-1);
+    }
+  }
+  ac.fillStyle = '#00ffff';
+  ac.globalAlpha = 0.8 + Math.sin(offset * 3) * 0.2;
+  ac.fillRect(3*pSize+18, 3*pSize+18, pSize-1, pSize-1);
+  ac.fillRect(4*pSize+18, 3*pSize+18, pSize-1, pSize-1);
+  ac.globalAlpha = 1;
+}
+let avOffset = 0;
+function animateAvatar() {
+  avOffset += 0.04;
+  drawAvatar(avOffset);
+  requestAnimationFrame(animateAvatar);
+}
+animateAvatar();
+
+// ── TYPEWRITER ──
+const phrases = ['WEB DEVELOPER 🌐','APK DEVELOPER 📱','BOT DEVELOPER 🤖','TELEGRAM BOT ✈','AUTOMATION WIZARD ⚡','CODE CRAFTSMAN 🛠'];
+let phraseIdx = 0, charIdx = 0, deleting = false;
+const tw = document.getElementById('typewriter');
+function typeWrite() {
+  const current = phrases[phraseIdx];
+  if (!deleting) {
+    charIdx++;
+    if (charIdx > current.length) { deleting = true; setTimeout(typeWrite, 1200); return; }
+  } else {
+    charIdx--;
+    if (charIdx < 0) { deleting = false; phraseIdx = (phraseIdx+1) % phrases.length; charIdx = 0; setTimeout(typeWrite, 280); return; }
+  }
+  tw.innerHTML = current.slice(0, charIdx) + '<span class="cursor-blink"></span>';
+  setTimeout(typeWrite, deleting ? 40 : 70);
+}
+typeWrite();
+
+// ── SCROLL REVEAL (optimized) ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      if (e.target.querySelectorAll('.skill-fill').length) {
+        e.target.querySelectorAll('.skill-fill').forEach(b => {
+          if (b.dataset.width) b.style.width = b.dataset.width + '%';
+        });
+      }
+      if (e.target.querySelectorAll('[data-count]').length && !e.target.dataset.counted) {
+        e.target.dataset.counted = 'true';
+        e.target.querySelectorAll('[data-count]').forEach(el => {
+          const target = parseInt(el.dataset.count);
+          let current = 0;
+          const step = Math.ceil(target / 35);
+          const interval = setInterval(() => {
+            current = Math.min(current + step, target);
+            el.textContent = current + (target >= 10 ? '+' : '');
+            if (current >= target) clearInterval(interval);
+          }, 35);
+        });
+      }
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.skill-card, .gallery-card, .about-text p, .stat-row').forEach(el => observer.observe(el));
+document.querySelectorAll('.skill-card').forEach((el,i) => el.style.transitionDelay = (i * 0.05) + 's');
+document.querySelectorAll('.gallery-card').forEach((el,i) => el.style.transitionDelay = (i * 0.08) + 's');
+
+// Smooth scroll untuk anchor
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
